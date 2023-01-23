@@ -1,10 +1,12 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
-import 'package:first_app/answer_widget.dart';
 import 'package:flutter/material.dart';
 
-import './question_widget.dart';
-import './btn_controller_widget.dart';
+import 'theme/colors.dart';
+import 'widgets/answer_widget.dart';
+import 'widgets/question_widget.dart';
+import 'widgets/btn_controller_widget.dart';
+import 'widgets/btn_finish_widget.dart';
 
 void main() => runApp(App());
 
@@ -64,6 +66,7 @@ class _AppState extends State<App> {
         home: Scaffold(
             appBar: AppBar(
               title: Text("Test App"),
+              backgroundColor: themedPrimary,
             ),
             body: Container(
                 padding: EdgeInsets.all(10),
@@ -85,13 +88,17 @@ class _AppState extends State<App> {
                             index: 1,
                             questions: questions,
                             answerText: answer.toString());
-                      }).toList()
+                      }).toList(),
+                      Container(
+                        constraints: BoxConstraints.tightFor(height: 150),
+                        child: BtnController(
+                          index: _questionIndex,
+                          arrayLength: questions.length,
+                          handleQuestion: _handleQuestion,
+                        ),
+                      )
                     ]),
-                    BtnController(
-                      index: _questionIndex,
-                      arrayLength: questions.length,
-                      handleQuestion: _handleQuestion,
-                    )
+                    BtnFinish()
                   ],
                 ))));
   }
