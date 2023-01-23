@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'theme/colors.dart';
 
 class BtnController extends StatelessWidget {
   final int index;
@@ -18,20 +19,43 @@ class BtnController extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            ElevatedButton(
-              onPressed: index == 0
-                  ? null
-                  : () => handleQuestion("back", arrayLength),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.red[400]),
-              child: Text("Previous"),
+            OutlinedButton(
+              onPressed:
+                  index == 0 ? null : () => handleQuestion("back", arrayLength),
+              style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(120, 35),
+                  side: BorderSide(
+                      width: 2.0,
+                      color: index == 0 ? themedDisabled : themedRed),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  foregroundColor: themedRed),
+              child: const Text("Previous",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                  )),
             ),
-            ElevatedButton(
-                onPressed: index == arrayLength - 1
-                    ? null
-                    : () => handleQuestion("next", arrayLength),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green[400]),
-                child: Text("Next")),
+            OutlinedButton(
+              onPressed: index == arrayLength - 1
+                  ? null
+                  : () => handleQuestion("next", arrayLength),
+              style: OutlinedButton.styleFrom(
+                  minimumSize: const Size(120, 35),
+                  side: BorderSide(
+                      width: 2.0,
+                      color: index == arrayLength - 1
+                          ? themedDisabled
+                          : themedPrimary),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  foregroundColor: themedPrimary),
+              child: const Text("Next",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w700,
+                  )),
+            )
           ],
         ));
   }
