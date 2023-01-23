@@ -3,17 +3,13 @@ import 'package:flutter/material.dart';
 import '../theme/colors.dart';
 
 class Answer extends StatelessWidget {
-  final void Function(int index, List<Map<String, Object>> questions)
-      answerQuestion;
-  final int index;
+  final void Function(String answerText) answerQuestion;
   final String answerText;
-  final List<Map<String, Object>> questions;
 
-  Answer(
-      {required this.answerQuestion,
-      required this.index,
-      required this.answerText,
-      required this.questions});
+  Answer({
+    required this.answerQuestion,
+    required this.answerText,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +17,7 @@ class Answer extends StatelessWidget {
       width: double.infinity,
       child: ElevatedButton(
           style: ElevatedButton.styleFrom(backgroundColor: themedPrimary),
-          onPressed: () => answerQuestion(index, questions),
+          onPressed: () => answerQuestion(answerText),
           child: Text(answerText)),
     );
   }
