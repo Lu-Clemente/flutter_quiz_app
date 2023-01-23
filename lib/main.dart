@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
+import 'package:first_app/widgets/score_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'theme/colors.dart';
@@ -21,29 +22,29 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   var _questionIndex = 0;
+  var _totalScore = 0;
   final questions = const [
     {
       "question": "What's is your favorite color?",
-      "answers": ["Black", "Blue", "Green", "White"]
+      "answers": ["Black", "Blue", "Green", "White"],
+      "correctAnswer": "Blue"
     },
     {
       "question": "What's your favorite animal?",
-      "answers": ["Eagle", "Fish", "Rabbit", "Lion"]
+      "answers": ["Eagle", "Fish", "Rabbit", "Lion"],
+      "correctAnswer": "Rabbit"
     },
     {
       "question": "What's Brazil's capital?",
-      "answers": ["São Paulo", "Brasília", "Manaus"]
+      "answers": ["São Paulo", "Brasília", "Manaus"],
+      "correctAnswer": "Brasília"
     },
     {
       "question": "Who's is the best soccer player?",
-      "answers": ["Ronaldo Fenômeno", "Messi", "Cristiano Ronaldo"]
+      "answers": ["Ronaldo Fenômeno", "Messi", "Cristiano Ronaldo"],
+      "correctAnswer": "Ronaldo Fenômeno"
     }
   ];
-
-  void _answerQuestion(int answerIndex, List<Map<String, Object>> questions) {
-    // print('Answer: ${questions[_questionIndex]['answer'].toString()[answerIndex]}');
-    print(answerIndex);
-  }
 
   void _handleQuestion(String actionType, int arrLength) {
     if (actionType == "next" && _questionIndex < arrLength - 1) {
@@ -55,6 +56,21 @@ class _AppState extends State<App> {
     if (actionType == "back" && _questionIndex > 0) {
       setState(() {
         _questionIndex--;
+      });
+    }
+  }
+
+  void _answerQuestion(String answerText) {
+    if (answerText == questions[_questionIndex]['correctAnswer'].toString()) {
+      setState(() {
+        _totalScore += 10;
+        if (_questionIndex < questions.length - 1) {
+          _questionIndex++;
+        }
+      });
+    } else {
+      setState(() {
+        _totalScore -= 5;
       });
     }
   }
@@ -85,8 +101,6 @@ class _AppState extends State<App> {
                           .map((answer) {
                         return Answer(
                             answerQuestion: _answerQuestion,
-                            index: 1,
-                            questions: questions,
                             answerText: answer.toString());
                       }).toList(),
                       Container(
@@ -98,7 +112,17 @@ class _AppState extends State<App> {
                         ),
                       )
                     ]),
-                    BtnFinish()
+                    Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(bottom: 40),
+                          child: Score(totalScore: _totalScore),
+                        ),
+                        BtnFinish(_questionIndex == questions.length - 1
+                            ? true
+                            : false)
+                      ],
+                    )
                   ],
                 ))));
   }
