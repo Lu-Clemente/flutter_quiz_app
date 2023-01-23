@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
+import 'package:first_app/answer_widget.dart';
 import 'package:flutter/material.dart';
 
 import './question_widget.dart';
+import './btn_controller_widget.dart';
 
 void main() => runApp(App());
 
@@ -18,12 +20,13 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   var _questionIndex = 0;
 
-  void _answerQuestion(int answerNumber) {
-    print('Answer #$answerNumber chosen!');
+  void _answerQuestion(int answerIndex, List<Map<String, Object>> questions) {
+    // print('Answer: ${questions[_questionIndex]['answer'].toString()[answerIndex]}');
+    print(answerIndex);
   }
 
-  void _handleQuestion(String actionType, int questionsLength) {
-    if (actionType == "next" && _questionIndex < questionsLength - 1) {
+  void _handleQuestion(String actionType, int arrLength) {
+    if (actionType == "next" && _questionIndex < arrLength - 1) {
       setState(() {
         _questionIndex++;
       });
@@ -38,11 +41,23 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    var questions = [
-      "What's is your favorite color?",
-      "What's your favorite animal?",
-      "What's Brazil's capital?",
-      "Who's is the best soccer player?"
+    const questions = [
+      {
+        "question": "What's is your favorite color?",
+        "answers": ["Black", "Blue", "Green", "White"]
+      },
+      {
+        "question": "What's your favorite animal?",
+        "answers": ["Eagle", "Fish", "Rabbit", "Lion"]
+      },
+      {
+        "question": "What's Brazil's capital?",
+        "answers": ["São Paulo", "Brasília", "Manaus"]
+      },
+      {
+        "question": "Who's is the best soccer player?",
+        "answers": ["Ronaldo Fenômeno", "Messi", "Cristiano Ronaldo"]
+      }
     ];
 
     return MaterialApp(
@@ -51,8 +66,7 @@ class _AppState extends State<App> {
             appBar: AppBar(
               title: Text("Test App"),
             ),
-            body: Center(
-                child: Container(
+            body: Container(
                     padding: EdgeInsets.all(10),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -62,45 +76,25 @@ class _AppState extends State<App> {
                           Container(
                             margin: EdgeInsets.only(bottom: 15),
                             child: Question(
-                              questions[_questionIndex],
+                              questions[_questionIndex]['question'].toString(),
                             ),
                           ),
-                          ElevatedButton(
-                              onPressed: () => _answerQuestion(1),
-                              child: Text("Answer 1")),
-                          ElevatedButton(
-                              onPressed: () => _answerQuestion(2),
-                              child: Text("Answer 2")),
-                          ElevatedButton(
-                              onPressed: () => _answerQuestion(3),
-                              child: Text("Answer 3")),
+                          ...(questions[_questionIndex]['answers']
+                                  as List<String>)
+                              .map((answer) {
+                            return Answer(
+                                answerQuestion: _answerQuestion,
+                                index: 1,
+                                questions: questions,
+                                answerText: answer.toString());
+                          }).toList()
                         ]),
-                        SizedBox(
-                            height: 50,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                ElevatedButton(
-                                  onPressed: _questionIndex == 0
-                                      ? null
-                                      : () => _handleQuestion(
-                                          "back", questions.length),
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.red[400]),
-                                  child: Text("Previous"),
-                                ),
-                                ElevatedButton(
-                                    onPressed:
-                                        _questionIndex == questions.length - 1
-                                            ? null
-                                            : () => _handleQuestion(
-                                                "next", questions.length),
-                                    style: ElevatedButton.styleFrom(
-                                        backgroundColor: Colors.green[400]),
-                                    child: Text("Next")),
-                              ],
-                            )),
+                        BtnController(
+                          index: _questionIndex,
+                          arrayLength: questions.length,
+                          handleQuestion: _handleQuestion,
+                        )
                       ],
-                    )))));
+                    ))));
   }
 }
