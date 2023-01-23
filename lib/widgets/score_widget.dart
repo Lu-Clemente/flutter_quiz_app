@@ -1,4 +1,4 @@
-import 'package:first_app/theme/colors.dart';
+import 'package:score_quiz_app/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class Score extends StatelessWidget {

@@ -1,6 +1,6 @@
 // ignore_for_file: prefer_const_constructors, avoid_print
 
-import 'package:first_app/widgets/score_widget.dart';
+import 'package:score_quiz_app/widgets/score_widget.dart';
 import 'package:flutter/material.dart';
 
 import 'theme/colors.dart';
@@ -81,7 +81,7 @@ class _AppState extends State<App> {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
             appBar: AppBar(
-              title: Text("Test App"),
+              title: Text("Quiz App"),
               backgroundColor: themedPrimary,
             ),
             body: Container(
