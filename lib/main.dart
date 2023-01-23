@@ -19,6 +19,24 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   var _questionIndex = 0;
+  final questions = const [
+    {
+      "question": "What's is your favorite color?",
+      "answers": ["Black", "Blue", "Green", "White"]
+    },
+    {
+      "question": "What's your favorite animal?",
+      "answers": ["Eagle", "Fish", "Rabbit", "Lion"]
+    },
+    {
+      "question": "What's Brazil's capital?",
+      "answers": ["São Paulo", "Brasília", "Manaus"]
+    },
+    {
+      "question": "Who's is the best soccer player?",
+      "answers": ["Ronaldo Fenômeno", "Messi", "Cristiano Ronaldo"]
+    }
+  ];
 
   void _answerQuestion(int answerIndex, List<Map<String, Object>> questions) {
     // print('Answer: ${questions[_questionIndex]['answer'].toString()[answerIndex]}');
@@ -41,25 +59,6 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    const questions = [
-      {
-        "question": "What's is your favorite color?",
-        "answers": ["Black", "Blue", "Green", "White"]
-      },
-      {
-        "question": "What's your favorite animal?",
-        "answers": ["Eagle", "Fish", "Rabbit", "Lion"]
-      },
-      {
-        "question": "What's Brazil's capital?",
-        "answers": ["São Paulo", "Brasília", "Manaus"]
-      },
-      {
-        "question": "Who's is the best soccer player?",
-        "answers": ["Ronaldo Fenômeno", "Messi", "Cristiano Ronaldo"]
-      }
-    ];
-
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -67,34 +66,33 @@ class _AppState extends State<App> {
               title: Text("Test App"),
             ),
             body: Container(
-                    padding: EdgeInsets.all(10),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Column(children: [
-                          Container(
-                            margin: EdgeInsets.only(bottom: 15),
-                            child: Question(
-                              questions[_questionIndex]['question'].toString(),
-                            ),
-                          ),
-                          ...(questions[_questionIndex]['answers']
-                                  as List<String>)
-                              .map((answer) {
-                            return Answer(
-                                answerQuestion: _answerQuestion,
-                                index: 1,
-                                questions: questions,
-                                answerText: answer.toString());
-                          }).toList()
-                        ]),
-                        BtnController(
-                          index: _questionIndex,
-                          arrayLength: questions.length,
-                          handleQuestion: _handleQuestion,
-                        )
-                      ],
-                    ))));
+                padding: EdgeInsets.all(10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisSize: MainAxisSize.max,
+                  children: [
+                    Column(children: [
+                      Container(
+                        margin: EdgeInsets.only(bottom: 15),
+                        child: Question(
+                          questions[_questionIndex]['question'].toString(),
+                        ),
+                      ),
+                      ...(questions[_questionIndex]['answers'] as List<String>)
+                          .map((answer) {
+                        return Answer(
+                            answerQuestion: _answerQuestion,
+                            index: 1,
+                            questions: questions,
+                            answerText: answer.toString());
+                      }).toList()
+                    ]),
+                    BtnController(
+                      index: _questionIndex,
+                      arrayLength: questions.length,
+                      handleQuestion: _handleQuestion,
+                    )
+                  ],
+                ))));
   }
 }
