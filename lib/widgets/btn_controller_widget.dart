@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'theme/colors.dart';
+
+import '../theme/colors.dart';
 
 class BtnController extends StatelessWidget {
   final int index;

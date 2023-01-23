@@ -1,5 +1,6 @@
-import 'package:first_app/theme/colors.dart';
 import 'package:flutter/material.dart';
+
+import 'package:first_app/theme/colors.dart';
 
 class BtnFinish extends StatelessWidget {
   const BtnFinish({super.key});

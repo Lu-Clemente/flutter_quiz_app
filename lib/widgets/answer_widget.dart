@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'theme/colors.dart';
+import '../theme/colors.dart';
 
 class Answer extends StatelessWidget {
   final void Function(int index, List<Map<String, Object>> questions)
