@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'theme/colors.dart';
+
 class Answer extends StatelessWidget {
   final void Function(int index, List<Map<String, Object>> questions)
       answerQuestion;
@@ -18,6 +20,7 @@ class Answer extends StatelessWidget {
     return Container(
       width: double.infinity,
       child: ElevatedButton(
+          style: ElevatedButton.styleFrom(backgroundColor: themedPrimary),
           onPressed: () => answerQuestion(index, questions),
           child: Text(answerText)),
     );
